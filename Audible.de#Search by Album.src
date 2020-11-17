@@ -15,7 +15,7 @@
 
 [Name]=Audible.de
 [BasedOn]=www.audible.de
-[IndexUrl]=https://www.audible.de/search?keywords=
+[IndexUrl]=https://www.audible.de/search?ipRedirectOverride=true&overrideBaseCountry=true&keywords=
 [AlbumUrl]=https://www.audible.de
 [WordSeperator]=+
 [IndexFormat]=%_url%|%Album%|%Author%|%Duration%|%Year%|%Language%
@@ -47,6 +47,7 @@ do
 	#  Url		
 	findinline "href=\""
 	sayuntil "?"
+	say "?ipRedirectOverride=true&overrideBaseCountry"
 	say "|"
 	
 	# Album
@@ -152,8 +153,8 @@ endif
 # Author
 outputto "Albumartist"
 findline "authorLabel"
-moveline 1 1
-joinuntil "</span>"
+moveline 3 1
+joinuntil "</li>"
 regexpreplace "</?[^><]+>" ""
 unspace
 regexpreplace "  +" " "
@@ -163,8 +164,8 @@ sayrest
 # narratorLabel
 outputto "Composer"
 findline "narratorLabel"
-moveline 1 1
-joinuntil "</span>"
+moveline 3 1
+joinuntil "</li>"
 regexpreplace "</?[^><]+>" ""
 unspace
 regexpreplace "  +" " "
